@@ -15,4 +15,10 @@ export default styled.button<{
   background: ${({ theme: { colors }, disabled }) =>
     !disabled ? colors.secondary : colors.grey};
   color: white;
+  border: 0;
+
+  &:hover {
+    ${({ theme: { colors }, disabled }) =>
+      !disabled && `background: ${colors.secondary1}`};
+  }
 `;

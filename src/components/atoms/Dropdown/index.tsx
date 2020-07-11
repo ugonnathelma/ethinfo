@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { StyledSelect, StyledOption, Options } from "./styles";
 
-type OptionType = { label: string; value: string | number | null };
+type OptionType = { label: string; value: string | null };
 
 type DropdownProps = {
   options: OptionType[];
-  onSelect: (value: string | number | null) => void;
-  selected?: string | number | null;
+  onSelect: (value: string | null) => void;
+  selected?: string | null;
   width?: string;
   height?: string;
   fontSize?: string;
@@ -43,13 +43,13 @@ const Dropdown = ({
     setShowOptions(true);
   };
 
-  const handleOptionClick = (value: string | number | null) => {
+  const handleOptionClick = (value: string | null) => {
     setShowOptions(false);
     setSelectedOption(value);
     onSelect(value);
   };
 
-  const getLabel = (value: string | number | null) =>
+  const getLabel = (value: string | null) =>
     newOptions.find((option) => option.value === value)?.label;
 
   const handleClickOutside = (event: Event) => {
