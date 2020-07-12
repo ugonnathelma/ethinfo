@@ -13,24 +13,50 @@ import {
   Error,
   FieldWrap,
   TableContainer,
-  Tooltip,
 } from "./styles";
 import Dropdown from "../../atoms/Dropdown";
 import getEthInfo from "../../../lib/getEthInfo";
 import QRModal from "./QRModal";
 
+type TransactionType = {
+  blockHash: string;
+  blockNumber: string;
+  confirmations: string;
+  contractAddress: string;
+  cumulativeGasUsed: string;
+  from: string;
+  gas: string;
+  gasPrice: string;
+  gasUsed: string;
+  hash: string;
+  input: string;
+  isError: string;
+  nonce: string;
+  timeStamp: string;
+  to: string;
+  transactionIndex: string;
+  txreceipt_status: string;
+  value: string;
+};
+
 const Form = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const [lastSearched, setLastSearched] = useState<string[]>([]);
+
   const [isAddressValid, setIsAddressValid] = useState(true);
+
   const [openModal, setOpenModal] = useState<boolean>(false);
+
   const [selectedNetwork, setSelectedNetwork] = useState<string | null>(null);
+
   const [result, setResult] = useState<{
     address: string;
     balance: number;
-    transactions: any[];
-    qrCode: any;
+    transactions: TransactionType[];
+    qrCode: string;
   } | null>(null);
+
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleNetworkSelect = (value: string | null) => {
@@ -38,6 +64,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    // vslidate as user is typing
     validateEthAddress(searchQuery);
   }, [searchQuery]);
 
@@ -164,21 +191,25 @@ const Form = () => {
                     <tbody>
                       <tr>
                         {columns.map((column) => (
-                          <th key={column}>{column}</th>
+                          <th key={column}>
+                            {column.replace(/([A-Z])/g, " $1")}
+                          </th>
                         ))}
                       </tr>
-                      {result.transactions.map((transaction: any) => {
-                        return (
+                      {result.transactions.map(
+                        (transaction: TransactionType) => (
                           <tr key={transaction.hash}>
-                            {columns.map((key) => (
-                              <td key={key}>
-                                {transaction[key]}
-                                <Tooltip>{transaction[key]}</Tooltip>
-                              </td>
-                            ))}
+                            {columns.map((key) => {
+                              const value =
+                                transaction[key as keyof TransactionType];
+
+                              return (
+                                <td key={key}>{value.length ? value : "-"}</td>
+                              );
+                            })}
                           </tr>
-                        );
-                      })}
+                        )
+                      )}
                     </tbody>
                   </table>
                 ) : (

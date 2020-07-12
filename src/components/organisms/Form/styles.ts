@@ -19,7 +19,7 @@ export const Left = styled.div`
 `;
 
 export const Right = styled.div`
-  flex: 1;
+  flex: 2;
   min-width: 490px;
   padding: 4em;
   display: flex;
@@ -41,7 +41,8 @@ export const Right = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  flex-wrap: wrap;
 `;
 
 export const Error = styled.div`
@@ -70,16 +71,6 @@ export const RecentlySearched = styled.div`
 
 `;
 
-export const Tooltip = styled.div`
-  position: absolute;
-  display: none;
-  background: ${({ theme: { colors } }) => colors.primary};
-  color: white;
-  padding: 0.7em;
-  margin-bottom: 20px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
-`;
-
 export const TableContainer = styled.div`
   overflow-x: auto;
   width: 100%;
@@ -91,10 +82,7 @@ export const TableContainer = styled.div`
 
   td,
   th {
-    overflow: hidden;
-    text-overflow: ellipsis;
     padding: 1em;
-    max-width: 300px;
   }
 
   tr {
@@ -110,9 +98,5 @@ export const TableContainer = styled.div`
     background-color: ${({ theme: { colors } }) => colors.primary};
     color: white;
     text-transform: uppercase;
-  }
-
-  td:hover ${Tooltip} {
-    display: block;
   }
 `;
