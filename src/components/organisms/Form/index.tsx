@@ -101,9 +101,11 @@ const Form = () => {
     }
   };
 
+  const { address, qrCode, transactions = [], balance } = result || {};
+
   const canSubmit = searchQuery.length && isAddressValid && selectedNetwork;
 
-  const columns = Object.keys(result?.transactions[0] || {});
+  const columns = transactions[0] ? Object.keys(transactions[0]) : [];
 
   return (
     <Container>
@@ -165,20 +167,16 @@ const Form = () => {
               <p>
                 <b>Address:</b>{" "}
                 <span>
-                  <u onClick={() => setOpenModal(true)}>{result.address} </u>
+                  <u onClick={() => setOpenModal(true)}>{address} </u>
                   {openModal && (
                     <QRModal closeModal={() => setOpenModal(false)}>
-                      <img
-                        src={result.qrCode}
-                        alt={result.qrCode}
-                        width="100%"
-                      />
+                      <img src={qrCode} alt={qrCode} width="100%" />
                     </QRModal>
                   )}
                 </span>
               </p>
               <p>
-                <b>Balance:</b> {result.balance}
+                <b>Balance:</b> {balance}
               </p>
               <br />
               <p>
@@ -186,7 +184,7 @@ const Form = () => {
               </p>
               <br />
               <TableContainer>
-                {result.transactions.length ? (
+                {transactions?.length ? (
                   <table>
                     <tbody>
                       <tr>
@@ -196,20 +194,18 @@ const Form = () => {
                           </th>
                         ))}
                       </tr>
-                      {result.transactions.map(
-                        (transaction: TransactionType) => (
-                          <tr key={transaction.hash}>
-                            {columns.map((key) => {
-                              const value =
-                                transaction[key as keyof TransactionType];
+                      {transactions?.map((transaction: TransactionType) => (
+                        <tr key={transaction.hash}>
+                          {columns.map((key) => {
+                            const value =
+                              transaction[key as keyof TransactionType];
 
-                              return (
-                                <td key={key}>{value.length ? value : "-"}</td>
-                              );
-                            })}
-                          </tr>
-                        )
-                      )}
+                            return (
+                              <td key={key}>{value.length ? value : "-"}</td>
+                            );
+                          })}
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 ) : (
