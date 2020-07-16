@@ -108,7 +108,7 @@ const Form = () => {
   const columns = transactions[0] ? Object.keys(transactions[0]) : [];
 
   return (
-    <Container>
+    <Container data-testid="eth-checker">
       <Left>
         <StyledForm>
           <h5>Recent Searches</h5>
@@ -132,7 +132,9 @@ const Form = () => {
               fontSize="16px"
               onChange={handleTextChange}
             />
-            {!isAddressValid && <Error>Invalid Ethereum Address</Error>}
+            {!isAddressValid && (
+              <Error data-testid="field-error">Invalid Ethereum Address</Error>
+            )}
           </FieldWrap>
           <br />
           <br />

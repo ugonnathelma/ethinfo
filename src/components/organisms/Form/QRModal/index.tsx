@@ -9,7 +9,9 @@ const QRModal = ({
   closeModal: () => void;
 }) => (
   <Wrapper data-testid="qr-modal">
-    <CloseButton onClick={closeModal}>✕</CloseButton>
+    <CloseButton data-testid="qr-modal-close" onClick={closeModal}>
+      ✕
+    </CloseButton>
     <div>{children}</div>
   </Wrapper>
 );
