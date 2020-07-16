@@ -112,7 +112,7 @@ const Form = () => {
       <Left>
         <StyledForm>
           <h5>Recent Searches</h5>
-          <RecentlySearched>
+          <RecentlySearched data-testid="recent-searches">
             {lastSearched.length
               ? lastSearched.map((address, index) => (
                   <span key={index} onClick={() => setSearchQuery(address)}>
@@ -124,6 +124,7 @@ const Form = () => {
           <br />
           <FieldWrap>
             <TextField
+              data-testid="search-field"
               placeholder="Ethereum address"
               width="100%"
               value={searchQuery}
@@ -149,6 +150,7 @@ const Form = () => {
           <br />
           <br />
           <Button
+            data-testid="search-button"
             height="50px"
             fontSize="16px"
             onClick={handleSearchAddress}
@@ -160,14 +162,26 @@ const Form = () => {
       </Left>
       <Right>
         {isLoading ? (
-          <img src={loader} alt="Loading..." width="60px" />
+          <img
+            src={loader}
+            alt="Loading..."
+            width="60px"
+            data-testid="loader"
+          />
         ) : (
           result?.address && (
             <>
               <p>
                 <b>Address:</b>{" "}
                 <span>
-                  <u onClick={() => setOpenModal(true)}>{address} </u>
+                  {address && (
+                    <u
+                      data-testid="eth-address"
+                      onClick={() => setOpenModal(true)}
+                    >
+                      {address}{" "}
+                    </u>
+                  )}
                   {openModal && (
                     <QRModal closeModal={() => setOpenModal(false)}>
                       <img src={qrCode} alt={qrCode} width="100%" />
@@ -201,7 +215,9 @@ const Form = () => {
                               transaction[key as keyof TransactionType];
 
                             return (
-                              <td key={key}>{value.length ? value : "-"}</td>
+                              <td data-testid="transaction-row" key={key}>
+                                {value.length ? value : "-"}
+                              </td>
                             );
                           })}
                         </tr>

@@ -8,7 +8,7 @@ const QRModal = ({
   children: ReactNode;
   closeModal: () => void;
 }) => (
-  <Wrapper>
+  <Wrapper data-testid="qr-modal">
     <CloseButton onClick={closeModal}>✕</CloseButton>
     <div>{children}</div>
   </Wrapper>

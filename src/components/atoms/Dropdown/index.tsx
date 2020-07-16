@@ -69,12 +69,16 @@ const Dropdown = ({
       fontSize={fontSize}
       ref={elemRef}
     >
-      <StyledOption onClick={handleClick} defaultOption={!selectedOption}>
+      <StyledOption
+        onClick={handleClick}
+        defaultOption={!selectedOption}
+        data-testid="drop-down"
+      >
         {getLabel(selectedOption)}
       </StyledOption>
 
       {showOptions && (
-        <Options>
+        <Options data-testid="drop-down-options">
           {newOptions.map(
             ({ label, value }: OptionType, index) =>
               value !== selectedOption && (
